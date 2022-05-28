@@ -1,2 +1,2 @@
-# wordleProject
+# wordle
 Wordle created in React. 
