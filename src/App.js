@@ -13,6 +13,8 @@ function App() {
     position: 0,
   });
 
+  const correctWord = "GRONK";
+
   const onSelectLetter = (keyVal) => {
     if (curAttempt.position > 4 || curAttempt.attempt > 5) return;
     const newBoard = [...board];
@@ -40,7 +42,16 @@ function App() {
         <h1>Wordle</h1>
       </nav>
       <AppContext.Provider
-        value={{ board, setBoard, curAttempt, setCurAttempt, onSelectLetter, onDelete, onEnter}}
+        value={{
+          board,
+          setBoard,
+          curAttempt,
+          setCurAttempt,
+          onSelectLetter,
+          onDelete,
+          onEnter,
+          correctWord,
+        }}
       >
         <div className="game">
           <Board />
