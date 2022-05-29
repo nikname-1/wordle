@@ -1,8 +1,8 @@
 import Keyboard from "./components/Keyboard";
 import Board from "./components/Board";
 import "./App.css";
-import { boardDefault } from "./Words";
-import { useState, createContext } from "react";
+import { boardDefault, generateWordSet } from "./Words";
+import { useState, createContext, useEffect } from "react";
 
 export const AppContext = createContext();
 
@@ -12,8 +12,20 @@ function App() {
     attempt: 0,
     position: 0,
   });
-
+  const [wordSet, setWordSet] = useState(new Set());
+  const [disabledLetters, setDisabledLetters] = useState([]);
+  const [gameOver, setGameOver] = useState({
+    gameOver: false,
+    guessedWord: false,
+  });
   const correctWord = "GRONK";
+
+  useEffect(() => {
+    generateWordSet().then((words) => {
+      console.log(words);
+      setWordSet(words.wordSet);
+    });
+  }, []);
 
   const onSelectLetter = (keyVal) => {
     if (curAttempt.position > 4 || curAttempt.attempt > 5) return;
@@ -33,7 +45,20 @@ function App() {
 
   const onEnter = () => {
     if (curAttempt.position !== 5 || curAttempt.attempt > 5) return;
-    setCurAttempt({ attempt: curAttempt.attempt + 1, position: 0 });
+
+    let curWord = "";
+    for (let i = 0; i < 5; i++) {
+      curWord += board[curAttempt.attempt][i];
+    }
+
+    if (wordSet.has(curWord.toLowerCase())) {
+      setCurAttempt({ attempt: curAttempt.attempt + 1, position: 0 });
+    } else {
+      alert("Word Not Found!");
+    }
+    if (curWord === correctWord) {
+      alert("You Guessed Correctly!");
+    }
   };
 
   return (
@@ -51,6 +76,10 @@ function App() {
           onDelete,
           onEnter,
           correctWord,
+          disabledLetters,
+          setDisabledLetters,
+          gameOver,
+          setGameOver,
         }}
       >
         <div className="game">
