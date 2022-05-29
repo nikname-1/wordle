@@ -3,6 +3,7 @@ import Board from "./components/Board";
 import "./App.css";
 import { boardDefault, generateWordSet } from "./Words";
 import { useState, createContext, useEffect } from "react";
+import GameOver from "./components/GameOver";
 
 export const AppContext = createContext();
 
@@ -18,12 +19,13 @@ function App() {
     gameOver: false,
     guessedWord: false,
   });
-  const correctWord = "GRONK";
+  const [correctWord, setCorrectWord] = useState("");
 
   useEffect(() => {
     generateWordSet().then((words) => {
-      console.log(words);
+      // console.log(words);
       setWordSet(words.wordSet);
+      setCorrectWord(words.todaysWord);
     });
   }, []);
 
@@ -48,7 +50,7 @@ function App() {
 
     let curWord = "";
     for (let i = 0; i < 5; i++) {
-      curWord += board[curAttempt.attempt][i];
+      curWord += board[curAttempt.attempt][i].toLowerCase();
     }
 
     if (wordSet.has(curWord.toLowerCase())) {
@@ -57,7 +59,11 @@ function App() {
       alert("Word Not Found!");
     }
     if (curWord === correctWord) {
-      alert("You Guessed Correctly!");
+      setGameOver({gameOver:true, guessedWord:true});
+      return;
+    }
+    if (curAttempt.attempt === 5){
+      setGameOver({gameOver:true, guessedWord:false});
     }
   };
 
@@ -84,7 +90,7 @@ function App() {
       >
         <div className="game">
           <Board />
-          <Keyboard />
+          {gameOver.gameOver ? <GameOver /> : <Keyboard />}
         </div>
       </AppContext.Provider>
     </div>
