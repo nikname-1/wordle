@@ -20,7 +20,7 @@ function App() {
     guessedWord: false,
   });
   const [correctWord, setCorrectWord] = useState("");
-
+  
   useEffect(() => {
     generateWordSet().then((words) => {
       // console.log(words);
@@ -28,6 +28,7 @@ function App() {
       setCorrectWord(words.todaysWord);
     });
   }, []);
+
 
   const onSelectLetter = (keyVal) => {
     if (curAttempt.position > 4 || curAttempt.attempt > 5) return;
@@ -59,11 +60,11 @@ function App() {
       alert("Word Not Found!");
     }
     if (curWord === correctWord) {
-      setGameOver({gameOver:true, guessedWord:true});
+      setGameOver({ gameOver: true, guessedWord: true });
       return;
     }
-    if (curAttempt.attempt === 5){
-      setGameOver({gameOver:true, guessedWord:false});
+    if (curAttempt.attempt === 5) {
+      setGameOver({ gameOver: true, guessedWord: false });
     }
   };
 
