@@ -105,6 +105,10 @@ function App() {
     }
   };
 
+  const retry = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="App">
       <nav>
@@ -131,6 +135,14 @@ function App() {
           <div className={gameOver.gameOver ? "gameOver" : ""}>
             <Board />
           </div>
+          { 
+            gameOver.gameOver &&
+            <div className="retry">
+              <button type="button" onClick={retry}>
+                RETRY?
+              </button>
+            </div> 
+          }
           {gameOver.gameOver ? <GameOver /> : <Keyboard />}
         </div>
         {/* <div className="retry"></div> */}
