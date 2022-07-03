@@ -22,7 +22,7 @@ function GameOver() {
   };
   useEffect(() => getWordDefinitions());
   return (
-    <div className="gameOver">
+    <div className="">
       <h3>
         {" "}
         {gameOver.guessedWord ? "You Correctly Guessed" : "You Failed :/"}
