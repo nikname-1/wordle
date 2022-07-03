@@ -138,7 +138,7 @@ function App() {
           { 
             gameOver.gameOver &&
             <div className="retry">
-              <button type="button" onClick={retry}>
+              <button type="button" onClick={retry} className="retryButton">
                 RETRY?
               </button>
             </div> 
